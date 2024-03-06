@@ -31,6 +31,11 @@ router.post('/user/addFavourite',jwtmiddleware,multerConfig.single('details_imag
 router.get('/user/viewFavourite',jwtmiddleware,usercontroller.viewFavourite)
 router.delete('/user/deleteFvourite/:id',jwtmiddleware,usercontroller.deleteFavourite)
 router.delete('/user/deleteAdmin/:id',jwtmiddleware,usercontroller.deleteAdmin)
+router.post('/user/addmessage',usercontroller.addMessage)
+router.get('/user/viewmessage',usercontroller.viewmessage)
+router.delete('/user/deleteMessage/:id',jwtmiddleware,usercontroller.deleteMessage)
+router.delete('/user/deleteReview/:id',jwtmiddleware,usercontroller.deleteReview)
+
 
 
 

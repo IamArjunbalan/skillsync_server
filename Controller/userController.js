@@ -5,6 +5,7 @@ const admins=require('../Models/adminSchema')
 const details=require('../Models/detailsSchema')
 const reviews=require('../Models/reviewSchema')
 const favourites=require('../Models/favouriteSchema')
+const inboxMessages=require('../Models/InboxMessageSchema')
 
 
 exports.register = async (req, res) => {
@@ -237,3 +238,65 @@ exports.deleteAdmin=async (req,res)=>{
     }
     
 }
+
+exports. addMessage=async(req,res)=>{
+    console.log("inside addmessage function!!")
+    console.log(req.file)
+    const{username,message,userId}=req.body
+    console.log(`${username},${message},${userId}`)
+    
+    try{
+
+        
+            const newDetails=new inboxMessages({ username,message,userId})
+            await newDetails.save()
+            res.status(200).json(newDetails)
+
+    }
+    catch(err){
+        res.status(401).json("something wrong:"+err)
+
+    }
+}
+
+exports.viewmessage=async(req,res)=>{
+    console.log("inside user Review")
+    console.log(req.payload);
+    try{
+        const data=await inboxMessages.find()
+        console.log(data)
+        res.status(200).json(data)
+    }
+    catch(err){
+        res.status(401).json(err)
+
+    }
+}
+
+exports.deleteMessage= async (req, res) => {
+    const { id } = req.params
+    console.log("inside delete favourite function")
+    try {
+        const result = await inboxMessages.findByIdAndDelete({ _id: id })
+        console.log(result)
+        res.status(200).json(result)
+    }
+    catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+exports.deleteReview= async (req, res) => {
+    const { id } = req.params
+    console.log("inside delete favourite function")
+    try {
+        const result = await reviews.findByIdAndDelete({ _id: id })
+        console.log(result)
+        res.status(200).json(result)
+    }
+    catch (err) {
+        res.status(401).json(err)
+    }
+}
+
+
